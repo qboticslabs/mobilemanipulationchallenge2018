@@ -1,0 +1,15 @@
+EBandPlannerROS:
+  Ctrl_Rate : 20
+  differential_drive: True
+  k_prop: 6
+  k_damp: 1
+  max_acceleration: 0.01
+  max_translational_acceleration: 0.01
+  max_rotational_acceleration: 0.01
+  max_vel_lin: 0.01
+  max_vel_th: 0.01
+  min_vel_lin: 0.08
+  min_vel_th: 0.08
+  xy_goal_tolerance: 0.04
+  yaw_goal_tolerance: 0.04
+
