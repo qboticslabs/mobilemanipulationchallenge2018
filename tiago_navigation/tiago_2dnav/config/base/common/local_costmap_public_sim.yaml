@@ -9,7 +9,7 @@ local_costmap:
   update_frequency : 5.0
   publish_frequency: 2.0
 
-  static_map    : false
+  static_map    : true
   rolling_window: true
   width         : 5.0
   height        : 5.0
@@ -48,7 +48,7 @@ local_costmap:
       max_obstacle_height: 0.2
 
   obstacle_rgbd_layer:
-    enabled: true
+    enabled: false
     observation_sources: rgbd_scan
     combination_method: 1
 

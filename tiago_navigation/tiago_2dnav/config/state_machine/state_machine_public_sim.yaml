@@ -9,4 +9,4 @@ localization: amcl
 planner      : base
 local_planner: eband
 
-visual_enabled: false
+visual_enabled: true

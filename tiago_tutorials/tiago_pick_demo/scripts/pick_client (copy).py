@@ -164,17 +164,11 @@ class PickAruco(object):
 			self.play_m_as.send_goal_and_wait(pmg)
 			rospy.loginfo("Raise object done.")
 
-
-		if string_operation == "place":
                         # Place the object back to its position
 			rospy.loginfo("Gonna place near where it was")
 			pick_g.object_pose.pose.position.z += 0.05
 			self.place_as.send_goal_and_wait(pick_g)
 			rospy.loginfo("Done!")
-
-
-	
-
 
         def lift_torso(self):
 		rospy.loginfo("Moving torso up")
