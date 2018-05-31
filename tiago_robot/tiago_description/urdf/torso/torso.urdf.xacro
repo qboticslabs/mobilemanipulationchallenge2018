@@ -32,6 +32,8 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
+
+<!--        <mesh filename="package://tiago_description/meshes/torso/torso_fix.stl" scale="0.04 0.04 0.04"/>  -->
         <mesh filename="package://tiago_description/meshes/torso/torso_fix.stl" scale="1 1 1"/>
       </geometry>
       <material name="LightGrey"/>
