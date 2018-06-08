@@ -47,7 +47,7 @@
         <geometry>
           <mesh>
             <uri>model://aruco_cube/meshes/aruco_cube_5cm.dae</uri>
-	    <scale> 1 1 2 </scale>
+	    <scale>1 1 2 </scale>
           </mesh>
         </geometry>
       </visual>
