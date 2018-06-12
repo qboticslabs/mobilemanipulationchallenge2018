@@ -172,12 +172,12 @@ class PickAruco(object):
                         self.lift_torso()
 
                         # Raise arm
-			rospy.loginfo("Moving arm to a safe pose")
-			pmg = PlayMotionGoal()
-                        pmg.motion_name = 'pick_final_pose'
-			pmg.skip_planning = False
-			self.play_m_as.send_goal_and_wait(pmg)
-			rospy.loginfo("Raise object done.")
+			#rospy.loginfo("Moving arm to a safe pose")
+			#pmg = PlayMotionGoal()
+                        #pmg.motion_name = 'pick_final_pose'
+			#pmg.skip_planning = False
+			#self.play_m_as.send_goal_and_wait(pmg)
+			#rospy.loginfo("Raise object done.")
 
 
 

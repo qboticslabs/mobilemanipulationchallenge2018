@@ -3445,7 +3445,7 @@
           <kinematic>0</kinematic>
           <gravity>1</gravity>
         </link>
-        <pose frame=''>-0.030134 -7e-05 0.039212 0 -0 0</pose>
+        <pose frame=''>-0.030134 -7e-05 0.039212 0 -0 1.57</pose>
       </model>
       <joint name='link_JOINT_0' type='fixed'>
         <parent>aruco_book::link</parent>

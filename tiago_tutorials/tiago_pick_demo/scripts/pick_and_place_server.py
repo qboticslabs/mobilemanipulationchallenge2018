@@ -189,8 +189,8 @@ class PickAndPlaceServer(object):
 		rospy.loginfo("Object pose: %s", object_pose.pose)
 		
                 #Add object description in scene
-		self.scene.add_box("part", object_pose, (self.object_depth, self.object_width, self.object_height))
-
+		#self.scene.add_box("part", object_pose, (self.object_depth, self.object_width, self.object_height))
+		self.scene.add_box("part", object_pose, (0.2,0.05,0.1 ))
 		rospy.loginfo("Second%s", object_pose.pose)
 		table_pose = copy.deepcopy(object_pose)
 
