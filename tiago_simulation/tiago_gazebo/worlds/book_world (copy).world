@@ -3309,7 +3309,7 @@
     </model>
     <model name='aruco_book_0'>
       <static>0</static>
-      <link name='link_book'>
+      <link name='link'>
         <inertial>
           <mass>0.05</mass>
           <inertia>
@@ -3369,27 +3369,9 @@
       </link>
       <pose frame=''>1.60089 -0.115899 0 0 -0 0</pose>
     </model>
-
-
-
-      <joint name='book_joint' type='fixed'>
-        <child>aruco_book_0</child>
-        <parent>aruco_marker_0</parent>
-        <axis>
-          <xyz>0 0 1</xyz>
-          <dynamics>
-            <spring_reference>0</spring_reference>
-            <spring_stiffness>0</spring_stiffness>
-          </dynamics>
-          <use_parent_model_frame>1</use_parent_model_frame>
-        </axis>
-      </joint>
-
-
-
     <model name='aruco_marker_0'>
       <static>0</static>
-      <link name='link_marker'>
+      <link name='link'>
         <inertial>
           <mass>0.01</mass>
           <inertia>
@@ -3431,7 +3413,7 @@
           </surface>
           <max_contacts>10</max_contacts>
         </collision>
-        <visual name='visual2'>
+        <visual name='visual1'>
           <pose frame=''>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>

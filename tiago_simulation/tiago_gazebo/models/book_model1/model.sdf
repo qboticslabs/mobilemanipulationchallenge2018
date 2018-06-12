@@ -1,0 +1,139 @@
+<?xml version='1.0'?>
+<sdf version='1.6'>
+  <model name='book_model1'>
+    <model name='aruco_book'>
+      <static>0</static>
+      <link name='link'>
+        <inertial>
+          <mass>0.05</mass>
+          <inertia>
+            <ixx>5.2083e-05</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>5.2083e-05</iyy>
+            <iyz>0</iyz>
+            <izz>2.0833e-05</izz>
+          </inertia>
+        </inertial>
+        <collision name='colision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.2 0.05 0.15</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>30</mu>
+                <mu2>30</mu2>
+                <fdir1>0 0 0</fdir1>
+              </ode>
+            </friction>
+            <contact>
+              <ode>
+                <kp>1e+06</kp>
+                <kd>100</kd>
+                <min_depth>0.0025</min_depth>
+                <max_vel>1</max_vel>
+              </ode>
+            </contact>
+          </surface>
+        </collision>
+        <visual name='visual1'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.2 0.05 0.15</size>
+            </box>
+          </geometry>
+        </visual>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose frame=''>0.031906 7e-05 -0.039211 0 -0 0</pose>
+    </model>
+    <model name='aruco_marker'>
+      <static>0</static>
+      <link name='link'>
+        <inertial>
+          <mass>0.05</mass>
+          <inertia>
+            <ixx>5.2083e-05</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>5.2083e-05</iyy>
+            <iyz>0</iyz>
+            <izz>2.0833e-05</izz>
+          </inertia>
+        </inertial>
+        <collision name='colision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.01 0.01 0.01</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>30</mu>
+                <mu2>30</mu2>
+                <fdir1>0 0 0</fdir1>
+              </ode>
+            </friction>
+            <contact>
+              <ode>
+                <kp>1e+06</kp>
+                <kd>100</kd>
+                <min_depth>0.0025</min_depth>
+                <max_vel>1</max_vel>
+              </ode>
+            </contact>
+          </surface>
+        </collision>
+        <visual name='visual1'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://aruco_cube/meshes/aruco_cube_5cm.dae</uri>
+              <scale>1 1 0.01</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose frame=''>-0.030134 -7e-05 0.039212 0 -0 0</pose>
+    </model>
+    <joint name='link_JOINT_0' type='fixed'>
+      <parent>aruco_book::link</parent>
+      <child>aruco_marker::link</child>
+      <pose frame=''>0 0 0 0 -0 0</pose>
+      <physics>
+        <ode>
+          <limit>
+            <cfm>0</cfm>
+            <erp>0.2</erp>
+          </limit>
+          <suspension>
+            <cfm>0</cfm>
+            <erp>0.2</erp>
+          </suspension>
+        </ode>
+      </physics>
+    </joint>
+    <static>0</static>
+    <allow_auto_disable>1</allow_auto_disable>
+  </model>
+</sdf>
