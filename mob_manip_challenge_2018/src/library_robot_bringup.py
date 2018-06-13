@@ -16,7 +16,7 @@ import sys
 
 from std_srvs.srv import Empty
 from move_base_msgs.msg import *
-
+import actionlib
 #This class comprises of all the functions to do this demo
 class Library_Robot:
 
@@ -24,7 +24,7 @@ class Library_Robot:
 
 
 		#X,y,z and x,y,z,w
-		self.table_pose = [-3.33663249016,
+		self.table_pose = [-3.13663249016,
 				   -1.88953304291,
 				    0,
 
@@ -47,7 +47,7 @@ class Library_Robot:
 
 
 
-		rospy.Timer(rospy.Duration(1), main_loop)
+		rospy.Timer(rospy.Duration(1), self.main_loop)
 
 
 		self.check_pick_service()
@@ -60,7 +60,8 @@ class Library_Robot:
 		if(self.call_pik_service):
 			self.send_goal_pose()
 			
-
+		if(self.self.send_goal_service):
+			self.call_place_service()
 
 
 
@@ -77,11 +78,11 @@ class Library_Robot:
 			rospy.loginfo("Creating service call for pick and place")
 	
 			self.pick_service = rospy.ServiceProxy('pick_gui', Empty)
-			self.pick_service = rospy.ServiceProxy('place_gui', Empty)
+			self.place_service = rospy.ServiceProxy('place_gui', Empty)
 
 			self.check_service = True
 
-			return 1
+			#return 1
 
 		except:
 			rospy.logwarn("Exception in Checking PICK and place service")
@@ -93,18 +94,14 @@ class Library_Robot:
 	def call_pick_service(self):
 		try:
 			resp = 1
-
 			rospy.loginfo("Calling Pick Service")
 
 			rospy.loginfo("Waiting to be done")
-
-
 			resp = self.pick_service()
 			
 			if(resp != 1):
 				self.call_pik_service = True
 				self.check_service = False
-
 				rospy.loginfo("Picking book completed")
 
 
@@ -121,7 +118,7 @@ class Library_Robot:
 	#Send goal position to navigation stack once it receive output from pick service, and check it finish or not
 	def send_goal_pose(self):
 		self.client = actionlib.SimpleActionClient('move_base',MoveBaseAction)
-		self.goal_pose = MoveBaseGoal()
+		self.goal = MoveBaseGoal()
 
 		
 
@@ -144,11 +141,43 @@ class Library_Robot:
 
 		rospy.loginfo("Sending Goal position to the robot")
 		self.client.send_goal(self.goal)
+		self.call_pik_service = False
+
+
+	 	rospy.loginfo("Waiting for the result of navigation")
+		self.client.wait_for_result()
+
+	 	print self.client.get_result()
+
+		self.send_goal_service = True	
+		# Prints out the result of executing the action
+		#return client.get_result()  # A FibonacciResult
+	
+		
 
 
 	#Once it successfull, call place, return if it is successfull
 	def call_place_service(self):
-		pass
+
+		try:
+			resp = 1
+			rospy.loginfo("Calling Place Service")
+
+			rospy.loginfo("Waiting to be done")
+			resp = self.place_service()
+			
+			if(resp != 1):
+				self.send_goal_service = False	
+				self.cal_place_service = True
+				rospy.loginfo("Placing book completed")
+
+
+		except:
+			rospy.logwarn("Exception in Calling Place service")
+			sys.exit(0)
+			
+		
+
 
 	#Return back to old place once place is successfull
 	def go_home(self):
@@ -157,6 +186,7 @@ class Library_Robot:
 
 if __name__ == "__main__":
 	robot_obj = Library_Robot()
+	rospy.spin()
 
 	
 
