@@ -20,7 +20,7 @@
 
   <!-- Pick & place server -->
   <node name="pick_and_place_server" pkg="mob_manip_challenge_2018" type="pick_and_place_server.py" output="screen">
-      <rosparam command="load" file="$(find tiago_pick_demo)/config/pick_and_place_params.yaml" />
+      <rosparam command="load" file="$(find mob_manip_challenge_2018)/config/pick_and_place_params.yaml" />
       <param name="object_width"  value="0.05" />
       <param name="object_height" value="0.1" />
       <param name="object_depth"  value="0.05" />

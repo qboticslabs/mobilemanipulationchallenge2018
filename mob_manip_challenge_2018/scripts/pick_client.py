@@ -32,7 +32,7 @@ import tf2_ros
 from tf2_geometry_msgs import do_transform_pose
 
 import numpy as np
-from std_srvs.srv import Empty
+from std_srvs.srv import Empty, Trigger
 
 import cv2
 from cv_bridge import CvBridge
@@ -54,11 +54,15 @@ class SphericalService(object):
 
 	def start_aruco_pick(self, req):
 		self.pick_type.pick_aruco("pick")
+
+		
+
 		return {}
 
 	def start_aruco_place(self, req):
-		self.pick_type.pick_aruco("place")
+
 		return {}
+
 
 class PickAruco(object):
 	def __init__(self):
@@ -172,12 +176,12 @@ class PickAruco(object):
                         self.lift_torso()
 
                         # Raise arm
-			#rospy.loginfo("Moving arm to a safe pose")
-			#pmg = PlayMotionGoal()
-                        #pmg.motion_name = 'pick_final_pose'
-			#pmg.skip_planning = False
-			#self.play_m_as.send_goal_and_wait(pmg)
-			#rospy.loginfo("Raise object done.")
+			rospy.loginfo("Moving arm to a safe pose")
+			pmg = PlayMotionGoal()
+                        pmg.motion_name = 'pick_final_pose'
+			pmg.skip_planning = False
+			self.play_m_as.send_goal_and_wait(pmg)
+			rospy.loginfo("Raise object done.")
 
 
 
