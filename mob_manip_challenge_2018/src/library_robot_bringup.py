@@ -12,28 +12,49 @@
 
 import rospy
 
-from std_srvs.srv import Empty
+import sys
 
+from std_srvs.srv import Empty
+from move_base_msgs.msg import *
 
 #This class comprises of all the functions to do this demo
 class Library_Robot:
 
 	def __init__(self):
 
+
+		#X,y,z and x,y,z,w
+		self.table_pose = [0.1,0.2,0.2,  0.2,0.1,0.2,0.1]
+
+
 		rospy.init_node('lib_manager_robot')
 		rospy.loginfo("Starting Library Manager Robot interface")
+
+
+
+		self.check_service = False
+		self.call_pik_service = False
+		self.send_goal_service = False
+		self.cal_place_service = False
+		self.go_home_fn = False
+
+
+
+		rospy.Timer(rospy.Duration(1), main_loop)
+
 
 		self.check_pick_service()
 
 
+	def main_loop(self,event):
+		if(self.check_service):
+			self.call_pick_service()
+
+		if(self.call_pik_service):
+			self.send_goal_pose()
+			
 
 
-		rospy.loginfo("Finished SphericalService constructor")
-                self.place_gui = rospy.Service("/place_gui", Empty, self.start_aruco_place)
-                self.pick_gui = rospy.Service("/pick_gui", Empty, self.start_aruco_pick)
-
-
-		
 
 
 	#Function to check pick gui is available, return true if available
@@ -42,37 +63,81 @@ class Library_Robot:
 		try:
 
 			rospy.loginfo("Waiting for PICK and Place Services")
-
 			rospy.wait_for_service('pick_gui')
-		
 			rospy.loginfo("Pick Gui service is available")
-
 			rospy.wait_for_service('place_gui')
-
 			rospy.loginfo("Place Gui service is available")
-
 			rospy.loginfo("Creating service call for pick and place")
-
-		
+	
 			self.pick_service = rospy.ServiceProxy('pick_gui', Empty)
-
 			self.pick_service = rospy.ServiceProxy('place_gui', Empty)
+
+			self.check_service = True
 
 			return 1
 
 		except:
 			rospy.logwarn("Exception in Checking PICK and place service")
-			return -1
+			sys.exit(0)
 
 		
 
 	#Call Pick service one it available, and return if it is successfull
 	def call_pick_service(self):
-		pass
+		try:
+			resp = 1
+
+			rospy.loginfo("Calling Pick Service")
+
+			rospy.loginfo("Waiting to be done")
+
+
+			resp = self.pick_service()
+			
+			if(resp != 1):
+				self.call_pik_service = True
+				self.check_service = False
+
+				rospy.loginfo("Picking book completed")
+
+
+		except:
+			rospy.logwarn("Exception in Calling PICK service")
+			sys.exit(0)
+			
+		
+
+
+
+
 	
 	#Send goal position to navigation stack once it receive output from pick service, and check it finish or not
 	def send_goal_pose(self):
-		pass
+		self.client = actionlib.SimpleActionClient('move_base',MoveBaseAction)
+		self.goal_pose = MoveBaseGoal()
+
+		
+
+
+		rospy.loginfo("Waiting for Move base server")
+		self.client.wait_for_server()
+
+	
+		self.goal.target_pose.pose.position.x=float(self.table_pose[0])
+		self.goal.target_pose.pose.position.y=float(self.table_pose[1])
+		self.goal.target_pose.pose.position.z=float(self.table_pose[2])
+
+		self.goal.target_pose.pose.orientation.x = float(self.table_pose[3])
+		self.goal.target_pose.pose.orientation.y= float(self.table_pose[4])
+		self.goal.target_pose.pose.orientation.z= float(self.table_pose[5])
+		self.goal.target_pose.pose.orientation.w= float(self.table_pose[6])
+
+		self.goal.target_pose.header.frame_id= 'map'
+		self.goal.target_pose.header.stamp = rospy.Time.now()
+
+		rospy.loginfo("Sending Goal position to the robot")
+		self.client.send_goal(self.goal)
+
 
 	#Once it successfull, call place, return if it is successfull
 	def call_place_service(self):
