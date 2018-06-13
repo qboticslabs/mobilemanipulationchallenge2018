@@ -34,6 +34,17 @@ class Library_Robot:
 				    0.0668169415995]
 
 
+		self.home_pose = [0.909803152084,
+        			 -0.0207388401031,
+        			  0.0,
+
+			          0.0,
+        			  0.0,
+        			 -0.0463148462734,
+        			 0.998926891727]
+
+
+
 		rospy.init_node('lib_manager_robot')
 		rospy.loginfo("Starting Library Manager Robot interface")
 
@@ -60,8 +71,15 @@ class Library_Robot:
 		if(self.call_pik_service):
 			self.send_goal_pose()
 			
-		if(self.self.send_goal_service):
+		if(self.send_goal_service):
 			self.call_place_service()
+
+		if(self.cal_place_service):
+			self.go_home()
+
+		if(self.go_home_fn):
+			rospy.loginfo("Completed Successfully")
+			sys.exit(0)
 
 
 
@@ -181,7 +199,44 @@ class Library_Robot:
 
 	#Return back to old place once place is successfull
 	def go_home(self):
-		pass
+		self.client = actionlib.SimpleActionClient('move_base',MoveBaseAction)
+		self.goal = MoveBaseGoal()
+
+		
+
+
+		rospy.loginfo("Waiting for Move base server")
+		self.client.wait_for_server()
+
+	
+		self.goal.target_pose.pose.position.x=float(self.home_pose[0])
+		self.goal.target_pose.pose.position.y=float(self.home_pose[1])
+		self.goal.target_pose.pose.position.z=float(self.home_pose[2])
+
+		self.goal.target_pose.pose.orientation.x = float(self.home_pose[3])
+		self.goal.target_pose.pose.orientation.y= float(self.home_pose[4])
+		self.goal.target_pose.pose.orientation.z= float(self.home_pose[5])
+		self.goal.target_pose.pose.orientation.w= float(self.home_pose[6])
+
+		self.goal.target_pose.header.frame_id= 'map'
+		self.goal.target_pose.header.stamp = rospy.Time.now()
+
+		rospy.loginfo("Sending Goal position to the robot")
+		self.client.send_goal(self.goal)
+		self.cal_place_service = False
+
+
+	 	rospy.loginfo("Waiting for the result of navigation")
+		self.client.wait_for_result()
+
+	 	print self.client.get_result()
+
+		self.go_home_fn = True	
+		# Prints out the result of executing the action
+		#return client.get_result()  # A FibonacciResult
+	
+		
+
 
 
 if __name__ == "__main__":
