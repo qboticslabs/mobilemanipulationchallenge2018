@@ -1,0 +1,20 @@
+<library path="src">
+  <class name="My Plugin" type="mob_manip_gui.my_module.MyPlugin" base_class_type="rqt_gui_py::Plugin">
+    <description>
+      An example Python GUI plugin to create a great user interface.
+    </description>
+    <qtgui>
+      <!-- optional grouping...
+      <group>
+        <label>Group</label>
+      </group>
+      <group>
+        <label>Subgroup</label>
+      </group>
+      -->
+      <label>Mob_Manip_GUI</label>
+      <icon type="theme">system-help</icon>
+      <statustip>GUI for Library management.</statustip>
+    </qtgui>
+  </class>
+</library>

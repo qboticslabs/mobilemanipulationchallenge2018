@@ -24,7 +24,7 @@ class Library_Robot:
 
 
 		#X,y,z and x,y,z,w
-		self.table_pose = [-3.13663249016,
+		self.table_pose = [-2.83663249016,
 				   -1.88953304291,
 				    0,
 
@@ -229,9 +229,15 @@ class Library_Robot:
 	 	rospy.loginfo("Waiting for the result of navigation")
 		self.client.wait_for_result()
 
-	 	print self.client.get_result()
+	 	#print self.client.get_result()
 
-		self.go_home_fn = True	
+		if(self.client.get_result() == actionlib.SimpleGoalState.DONE):
+
+			self.go_home_fn = True
+
+		else:
+			self.cal_place_service = True
+			self.go_home_fn = False
 		# Prints out the result of executing the action
 		#return client.get_result()  # A FibonacciResult
 	
