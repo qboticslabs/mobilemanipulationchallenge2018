@@ -24,7 +24,14 @@ class Library_Robot:
 
 
 		#X,y,z and x,y,z,w
-		self.table_pose = [0.1,0.2,0.2,  0.2,0.1,0.2,0.1]
+		self.table_pose = [-3.33663249016,
+				   -1.88953304291,
+				    0,
+
+				    0,
+				    0,
+				    0.997765251106,
+				    0.0668169415995]
 
 
 		rospy.init_node('lib_manager_robot')
