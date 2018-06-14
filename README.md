@@ -6,12 +6,18 @@ Software Framework
 2) Ubuntu 16.04 LTS
 
 
-Challenge Packages 
+
+
+Note: Assuming all the TIAGo packages are set on your computer
+
+##Challenge Packages 
+
+1) From the repository, copy following packages to the ROS workspace and do catkin build
+
 ```
 mob_manip_challenge_2018  
 mob_manip_gui
 ```
-1) Copy both of this packages to the ROS workspace and do catkin build
 
 ################################################################################################################
 ##Use-case 1: Delivering book to a table
