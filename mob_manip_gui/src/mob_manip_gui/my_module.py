@@ -2,6 +2,10 @@ import os
 import rospkg
 import rospy
 
+from std_srvs.srv import Empty
+from move_base_msgs.msg import *
+import actionlib
+
 from qt_gui.plugin import Plugin
 from python_qt_binding import loadUi
 from python_qt_binding.QtWidgets import QWidget
@@ -44,6 +48,74 @@ class MyPlugin(Plugin):
             self._widget.setWindowTitle(self._widget.windowTitle() + (' (%d)' % context.serial_number()))
         # Add widget to the user interface
         context.add_widget(self._widget)
+
+
+	self.book_no = 0
+
+	self.book_shelf_pose = [[1.01864218712,-7.92231225967,0,  0,0,0.0314119279953,0.99950652363],
+			     [1.03648173809,-9.72018623352,0,  0,0,0.0445468954746,0.99900729432],
+			     [1.01864218712,-7.92231225967,0,  0,0,0.0314119279953,0.99950652363],
+			     [1.03648173809,-9.72018623352,0,  0,0,0.0445468954746,0.99900729432],
+			    ]
+
+
+        self._widget.pushButton.clicked[bool].connect(self.go_robot)
+
+        self._widget.radioButton.clicked[bool].connect(self.book_one)
+        self._widget.radioButton_2.clicked[bool].connect(self.book_two)
+        self._widget.radioButton_3.clicked[bool].connect(self.book_three)
+        self._widget.radioButton_4.clicked[bool].connect(self.book_four)
+
+
+
+    def book_one(self):
+	self.book_no = 0	
+
+
+    def book_two(self):
+	self.book_no = 1	
+
+
+    def book_three(self):
+	self.book_no = 2	
+
+    def book_four(self):
+	self.book_no = 3	
+
+
+
+
+
+    def go_robot(self):
+	rospy.loginfo("Assisting robot to the destination, to find book = %d", self.book_no)
+
+
+
+	self.client = actionlib.SimpleActionClient('move_base',MoveBaseAction)
+	self.goal = MoveBaseGoal()
+
+		
+	rospy.loginfo("Waiting for Move base server")
+	self.client.wait_for_server()
+
+	
+	self.goal.target_pose.pose.position.x=float(self.book_shelf_pose[self.book_no][0])
+	self.goal.target_pose.pose.position.y=float(self.book_shelf_pose[self.book_no][1])
+	self.goal.target_pose.pose.position.z=float(self.book_shelf_pose[self.book_no][2])
+
+	self.goal.target_pose.pose.orientation.x = float(self.book_shelf_pose[self.book_no][3])
+	self.goal.target_pose.pose.orientation.y= float(self.book_shelf_pose[self.book_no][4])
+	self.goal.target_pose.pose.orientation.z= float(self.book_shelf_pose[self.book_no][5])
+	self.goal.target_pose.pose.orientation.w= float(self.book_shelf_pose[self.book_no][6])
+
+	self.goal.target_pose.header.frame_id= 'map'
+	self.goal.target_pose.header.stamp = rospy.Time.now()
+
+	rospy.loginfo("Sending Goal position to the robot")
+	self.client.send_goal(self.goal)
+
+
+	
 
     def shutdown_plugin(self):
         # TODO unregister all publishers here
