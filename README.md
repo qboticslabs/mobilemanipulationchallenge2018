@@ -49,6 +49,10 @@ Start rqt to start GUI, Load the Mob manip GUI from Plugins->Mob_Manip_GUI
 Now you can select a book and robot will guide you
 
 
+# Demo Video
+
+[![IMAGE ALT TEXT](https://github.com/qboticslabs/mobilemanipulationchallenge2018/blob/master/tiago.png)](https://youtu.be/P9L4VQgN19E "Mobile Manipulation Challenge 2018 Concept by Qbotics")
+
 
 
 
