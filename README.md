@@ -1,4 +1,4 @@
-#Instruction to run the Tiago Librarian demo simulation
+# Instruction to run the Tiago Librarian demo simulation
 
 Software Framework
 
@@ -10,7 +10,7 @@ Software Framework
 
 Note: Assuming all the TIAGo packages are set on your computer
 
-##Challenge Packages 
+## Challenge Packages 
 
 1) From the repository, copy following packages to the ROS workspace and do catkin build
 
@@ -20,7 +20,7 @@ mob_manip_gui
 ```
 
 ################################################################################################################
-##Use-case 1: Delivering book to a table
+## Use-case 1: Delivering book to a table
 
 Starting the simulation with MoveIt! and ROS navigation stack
 ```
