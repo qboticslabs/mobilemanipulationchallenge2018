@@ -19,7 +19,7 @@ mob_manip_challenge_2018
 mob_manip_gui
 ```
 
-################################################################################################################
+
 ## Use-case 1: Delivering book to a table
 
 Starting the simulation with MoveIt! and ROS navigation stack
@@ -37,7 +37,6 @@ Starting the demo execution node
 $ rosrun mob_manip_challenge_2018 library_robot_bringup.py
 ```
 
-################################################################################################################
 ## Use-case 2: Guiding student to the shelf
 
 Starting the simulation with MoveIt! and ROS navigation stack
