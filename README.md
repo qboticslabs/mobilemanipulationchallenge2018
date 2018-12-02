@@ -1,4 +1,4 @@
-# Instruction to run the Tiago Librarian demo simulation
+# Instructions to run the Tiago Librarian demo simulation
 
 Software Framework
 
